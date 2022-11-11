@@ -10,7 +10,11 @@ import Menu from '@mui/material/Menu';
 import { useState } from 'react';
 import useLogout from 'hooks/auth/useLogout';
 
-export default function MyAppBar() {
+interface Props {
+  drawerToggle: () => void;
+}
+
+export default function MyAppBar({ drawerToggle }: Props) {
   const [anchorEl, setAnchorEl] = useState(null);
   const logout = useLogout();
 
@@ -32,6 +36,7 @@ export default function MyAppBar() {
             color="inherit"
             aria-label="menu"
             sx={{ mr: 2 }}
+            onClick={drawerToggle}
           >
             <MenuIcon />
           </IconButton>

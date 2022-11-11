@@ -27,7 +27,7 @@ const timeToString = (time: Date): string =>
   )}:${padTo2Digits(time.getMinutes())}`;
 
 const stringTimeToDate = (time: string): Date =>
-  new Date(Date.parse(`2000-01-01T${time}.000Z`));
+  new Date(Date.parse(`2000-01-01T${time}`));
 
 export {
   padTo2Digits,

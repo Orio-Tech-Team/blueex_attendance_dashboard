@@ -23,7 +23,7 @@ export default function DashboardLayout({
         handleDrawerToggle={handleDrawerToggle}
       />
       <div className="main__layout">
-        <MyAppBar />
+        <MyAppBar drawerToggle={handleDrawerToggle} />
         {children}
       </div>
     </main>

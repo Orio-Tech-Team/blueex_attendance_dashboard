@@ -31,7 +31,7 @@ const Sidebar = ({ mobileOpen, setMobileOpen, handleDrawerToggle }: Props) => {
           '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
         }}
       >
-        <SidebarItems />
+        <SidebarItems drawerToggle={handleDrawerToggle} />
       </Drawer>
       <Drawer
         variant="permanent"
@@ -41,7 +41,7 @@ const Sidebar = ({ mobileOpen, setMobileOpen, handleDrawerToggle }: Props) => {
         }}
         open
       >
-        <SidebarItems />
+        <SidebarItems drawerToggle={handleDrawerToggle} />
       </Drawer>
     </>
   );

@@ -9,8 +9,15 @@ import Toolbar from '@mui/material/Toolbar';
 import Divider from '@mui/material/Divider';
 import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
-const SidebarItems = () => {
+interface Props {
+  drawerToggle: () => void;
+}
+
+const SidebarItems = ({ drawerToggle }: Props) => {
+  const router = useRouter();
+
   const items = [
     {
       name: 'Attendance',
@@ -23,6 +30,12 @@ const SidebarItems = () => {
       link: '/dashboard/add-attendance',
     },
   ];
+
+  const onClick = (link: string) => {
+    drawerToggle();
+    router.push(link);
+  };
+
   return (
     <div>
       <Toolbar />
@@ -30,14 +43,16 @@ const SidebarItems = () => {
       <Divider />
       <List>
         {items.map((item, index) => (
-          <Link key={index} href={item.link}>
-            <ListItem disablePadding>
-              <ListItemButton>
-                <ListItemIcon>{item.icon}</ListItemIcon>
-                <ListItemText primary={item.name} />
-              </ListItemButton>
-            </ListItem>
-          </Link>
+          <ListItem
+            key={index}
+            disablePadding
+            onClick={() => onClick(item.link)}
+          >
+            <ListItemButton>
+              <ListItemIcon>{item.icon}</ListItemIcon>
+              <ListItemText primary={item.name} />
+            </ListItemButton>
+          </ListItem>
         ))}
       </List>
     </div>
