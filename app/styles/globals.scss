@@ -18,6 +18,12 @@ body {
 }
 
 .main__layout {
-  width: calc(100% - 240px);
-  margin-left: auto;
+  width: 100%;
+}
+
+@media screen and (min-width: 600px) {
+  .main__layout {
+    width: calc(100% - 240px);
+    margin-left: auto;
+  }
 }
