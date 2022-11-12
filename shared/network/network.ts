@@ -1,5 +1,6 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import { getCookie } from 'cookies-next';
+import AppError from 'shared/error/error';
 
 interface FetchProps {
   method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
@@ -33,8 +34,8 @@ class Axios {
         return response;
       })
       .catch(function (error) {
-        //   console.log(error);
-        return error.response;
+        // return error.response;
+        throw new AppError(error.response.message);
       });
 
     return result;

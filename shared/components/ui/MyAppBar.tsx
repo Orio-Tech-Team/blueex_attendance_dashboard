@@ -8,7 +8,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import { useState } from 'react';
-import useLogout from 'hooks/auth/useLogout';
+import useLogout from 'features/user/presentation/hooks/useLogout';
 
 interface Props {
   drawerToggle: () => void;
