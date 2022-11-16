@@ -11,6 +11,8 @@ import {
 import MySnackbar from '@ui/MySnackbar';
 import useUpdateAttendance from 'features/attendance/presentation/hooks/useUpdateAttendance';
 import UpdateAttendanceParams from 'features/attendance/data/params/update_attendance_params';
+import MySwal from '@ui/MySwal';
+import { useRouter } from 'next/navigation';
 
 interface Props {
   update: string | null;
@@ -19,13 +21,14 @@ const UpdateAttendanceForm = ({ update }: Props) => {
   const { updateAttendance, isLoading } = useUpdateAttendance();
 
   const [message, setMessage] = useState('Add');
-  const [snackbar, setSnackbar] = useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState('');
 
   const [empNo, setEmpNo] = useState('');
   const [date, setDate] = useState(new Date());
   const [inTime, setInTime] = useState(new Date());
   const [outTime, setOutTime] = useState(new Date());
+
+  const router = useRouter();
+  const navigateToAttendance = () => router.push('/dashboard');
 
   useEffect(() => {
     if (update) {
@@ -58,12 +61,20 @@ const UpdateAttendanceForm = ({ update }: Props) => {
     const res = await updateAttendance(params);
 
     res
-      ? setSnackbarMessage(
-          `Attendance ${message == 'Add' ? 'added' : 'updated'} successfully`,
-        )
-      : setSnackbarMessage('Something went wrong');
-
-    setSnackbar(true);
+      ? MySwal({
+          icon: 'success',
+          title: 'Success!',
+          text: `Attendance ${
+            message == 'Add' ? 'added' : 'updated'
+          } successfully`,
+          onConfirm: navigateToAttendance,
+        })
+      : MySwal({
+          icon: 'error',
+          title: 'Error!',
+          text: `Employee ID is incorrect`,
+          onConfirm: navigateToAttendance,
+        });
   };
 
   return (
@@ -95,11 +106,6 @@ const UpdateAttendanceForm = ({ update }: Props) => {
           `${message} Attendance`
         )}
       </Button>
-      <MySnackbar
-        open={snackbar}
-        setOpen={setSnackbar}
-        message={snackbarMessage}
-      />
     </form>
   );
 };

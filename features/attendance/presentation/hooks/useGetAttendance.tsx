@@ -3,6 +3,23 @@ import AttendanceRepository from 'features/attendance/domain/repository/attendan
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import ModeIcon from '@mui/icons-material/Mode';
+import Chip from '@mui/material/Chip';
+
+type chipTypes =
+  | 'success'
+  | 'warning'
+  | 'error'
+  | 'default'
+  | 'primary'
+  | 'secondary'
+  | 'info'
+  | undefined;
+
+const chipType = (type: string): chipTypes => {
+  if (type == 'Present') return 'success';
+  if (type == 'Late') return 'warning';
+  return 'error';
+};
 
 const useGetAttendance = (date: string) => {
   const router = useRouter();
@@ -30,21 +47,28 @@ const useGetAttendance = (date: string) => {
       const res: AttendanceModel[] = await attendanceRepository.getAttendance(
         date,
       );
-      const newData = res.map((item) => [
-        item.employeeNumber,
-        item.employeeName,
-        item.attendanceDate,
-        item.inTime,
-        item.outTime,
-        item.workingHour,
-        item.type,
-        item.shift,
-        <ModeIcon
-          key={item.employeeNumber}
-          className="cursor-pointer"
-          onClick={() => updateLocal(item)}
-        />,
-      ]);
+      const newData = res.map((item) => {
+        const chipColor = chipType(item.type);
+        return [
+          item.employeeNumber,
+          item.employeeName,
+          item.attendanceDate,
+          item.inTime,
+          item.outTime,
+          item.workingHour,
+          <Chip
+            key={item.employeeNumber}
+            label={item.type}
+            color={chipColor}
+          />,
+          item.shift,
+          <ModeIcon
+            key={item.employeeNumber}
+            className="cursor-pointer"
+            onClick={() => updateLocal(item)}
+          />,
+        ];
+      });
       setData(newData);
       setIsLoading(false);
       return res;

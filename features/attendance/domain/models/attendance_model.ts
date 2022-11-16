@@ -16,7 +16,8 @@ class AttendanceModel {
     this.attendanceDate = json.attendance_date;
     this.inTime = json.intime;
     this.outTime = json.outtime;
-    this.workingHour = secondsToTime(json.working_hours);
+    this.workingHour =
+      json.working_hours != 0 ? json.working_hours : '00:00:00';
     this.type = json.type;
     this.shift = json.shift;
   }
